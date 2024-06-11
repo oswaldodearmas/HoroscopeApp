@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">HoroscopeApp</string>
+    <string name="activity_main_title_textView">Your Horoscope!</string>
+    <string name="horoscopeitem_name_aries">Aries</string>
+    <string name="horoscopeitem_name_taurus">Taurus</string>
+    <string name="horoscopeitem_name_gemini">Gemini</string>
+    <string name="horoscopeitem_name_cancer">Cancer</string>
+    <string name="horoscopeitem_name_leo">Leo</string>
+    <string name="horoscopeitem_name_virgo">Virgo</string>
+    <string name="horoscopeitem_name_libra">Libra</string>
+    <string name="horoscopeitem_name_scorpio">Scopio</string>
+    <string name="horoscopeitem_name_sagittarius">Sagittarius</string>
+    <string name="horoscopeitem_name_capricorn">Capricorn</string>
+    <string name="horoscopeitem_name_aquarius">Aquarius</string>
+    <string name="horoscopeitem_name_pisces">Pisces</string>
+    <string name="horoscopeitem_dates_aries">Mar. 21 - Apr. 19</string>
+    <string name="horoscopeitem_dates_taurus">Apr. 20 - May 20</string>
+    <string name="horoscopeitem_dates_gemini">May 21 - June 20</string>
+    <string name="horoscopeitem_dates_cancer">June 21 - July 22</string>
+    <string name="horoscopeitem_dates_leo">July 23 - Aug. 22</string>
+    <string name="horoscopeitem_dates_virgo">Aug. 23 - Sept. 22</string>
+    <string name="horoscopeitem_dates_libra">Sept. 23 - Oct. 22</string>
+    <string name="horoscopeitem_dates_scorpio">Oct. 23 - Nov. 21</string>
+    <string name="horoscopeitem_dates_sagittarius">Nov. 22 - Dec. 21</string>
+    <string name="horoscopeitem_dates_capricorn">Dec. 22 - Jan. 19</string>
+    <string name="horoscopeitem_dates_aquarius">Jan. 20 - Feb. 18</string>
+    <string name="horoscopeitem_dates_pisces">Feb. 19 - Mar. 20</string>
 </resources>

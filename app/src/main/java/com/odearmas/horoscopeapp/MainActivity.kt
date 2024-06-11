@@ -3,8 +3,8 @@ package com.odearmas.horoscopeapp
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.odearmas.horoscopeapp.model.HoroscopeItem
 
@@ -32,7 +32,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         recyclerView = findViewById(R.id.activity_main_recyclerView)
-
-
+        val adapter = HoroscopeAdapter(horoscopeList)
+        recyclerView.adapter = adapter
+        //recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = GridLayoutManager(this,2)
     }
 }
