@@ -1,10 +1,10 @@
 package com.odearmas.horoscopeapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.odearmas.horoscopeapp.model.HoroscopeItem
 
@@ -32,9 +32,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         recyclerView = findViewById(R.id.activity_main_recyclerView)
-        val adapter = HoroscopeAdapter(horoscopeList)
+        val adapter = HoroscopeAdapter(horoscopeList){position->
+            navigateToDetail(horoscopeList[position])}
+
         recyclerView.adapter = adapter
         //recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = GridLayoutManager(this,2)
     }
+        fun navigateToDetail(horoscopeItem: HoroscopeItem) {
+            val callDetail : Intent = Intent(this, DetailActivity::class.java)
+            callDetail.putExtra("horoscope_id", horoscopeItem.id)
+            startActivity(callDetail)
+        }
 }

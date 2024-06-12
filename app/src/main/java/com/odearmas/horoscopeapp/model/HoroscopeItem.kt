@@ -1,6 +1,5 @@
 package com.odearmas.horoscopeapp.model
 
-import androidx.core.content.ContextCompat.getString
 import com.odearmas.horoscopeapp.R
 
 enum class HoroscopeItem(val id:String, val zodiacName: Int, val date: Int, val logo:Int) {
@@ -15,5 +14,11 @@ enum class HoroscopeItem(val id:String, val zodiacName: Int, val date: Int, val 
     SAGITTARIUS("sagittarius", R.string.horoscopeitem_name_sagittarius,R.string.horoscopeitem_dates_sagittarius,R.drawable.ic_sagittarius),
     CAPRICORN("capricorn", R.string.horoscopeitem_name_capricorn,R.string.horoscopeitem_dates_capricorn,R.drawable.ic_capricorn),
     AQUARIUS("aquarius", R.string.horoscopeitem_name_aquarius,R.string.horoscopeitem_dates_aquarius,R.drawable.ic_aquarius),
-    PISCES("pisces", R.string.horoscopeitem_name_pisces,R.string.horoscopeitem_dates_pisces,R.drawable.ic_pisces)
+    PISCES("pisces", R.string.horoscopeitem_name_pisces,R.string.horoscopeitem_dates_pisces,R.drawable.ic_pisces);
+
+    companion object {
+        fun fromId(id: String): HoroscopeItem? {
+            return entries.find { it.id == id }
+        }
+    }
 }

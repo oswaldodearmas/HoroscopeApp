@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">HoroscopeApp</string>
-    <string name="activity_main_title_textView">Your Horoscope!</string>
+    <string name="activity_main_title_textView">Horoscope!</string>
     <string name="horoscopeitem_name_aries">Aries</string>
     <string name="horoscopeitem_name_taurus">Taurus</string>
     <string name="horoscopeitem_name_gemini">Gemini</string>
@@ -25,4 +25,6 @@
     <string name="horoscopeitem_dates_capricorn">Dec. 22 - Jan. 19</string>
     <string name="horoscopeitem_dates_aquarius">Jan. 20 - Feb. 18</string>
     <string name="horoscopeitem_dates_pisces">Feb. 19 - Mar. 20</string>
+
+    <string name="activity_detail_title_textView">Your Horoscope!</string>
 </resources>

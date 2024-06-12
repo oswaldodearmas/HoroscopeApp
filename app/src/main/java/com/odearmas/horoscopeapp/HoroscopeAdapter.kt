@@ -1,13 +1,14 @@
 package com.odearmas.horoscopeapp
 
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.odearmas.horoscopeapp.model.HoroscopeItem
 
-class HoroscopeAdapter(private val dataSet: List<HoroscopeItem>) :
+class HoroscopeAdapter(
+    private val dataSet: List<HoroscopeItem>,
+    private val onItemClickListener: (Int) -> Unit
+) :
     RecyclerView.Adapter<HoroscopeViewHolder>() {
 
     // Este método se llama para crear nuevas celdas,
@@ -32,6 +33,12 @@ class HoroscopeAdapter(private val dataSet: List<HoroscopeItem>) :
         holder.textView1.setText(horoscope.zodiacName)
         holder.textView2.setText(horoscope.date)
         holder.imageView.setImageResource(horoscope.logo)
+
+        holder.itemView.setOnClickListener {
+            onItemClickListener(position)
+            //Log.i{"ADAPTER", "Hemos hecho click en un elemento ${horoscope.name}"}
+
+        }
 
     }
 
