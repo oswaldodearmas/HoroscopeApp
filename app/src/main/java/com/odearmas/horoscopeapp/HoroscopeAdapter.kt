@@ -36,7 +36,6 @@ class HoroscopeAdapter(
 
         holder.itemView.setOnClickListener {
             onItemClickListener(position)
-            //Log.i{"ADAPTER", "Hemos hecho click en un elemento ${horoscope.name}"}
 
         }
 
