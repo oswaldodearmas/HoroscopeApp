@@ -1,7 +1,8 @@
 package com.odearmas.horoscopeapp
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,27 +14,13 @@ import com.odearmas.horoscopeapp.model.HoroscopeItem
 
 class DetailActivity : AppCompatActivity() {
 
-    val horoscopeList: List<HoroscopeItem> = listOf(
-        HoroscopeItem.ARIES,
-        HoroscopeItem.TAURUS,
-        HoroscopeItem.GEMINI,
-        HoroscopeItem.CANCER,
-        HoroscopeItem.LEO,
-        HoroscopeItem.VIRGO,
-        HoroscopeItem.LIBRA,
-        HoroscopeItem.SCORPIO,
-        HoroscopeItem.SAGITTARIUS,
-        HoroscopeItem.CAPRICORN,
-        HoroscopeItem.AQUARIUS,
-        HoroscopeItem.PISCES
-    )
-
+    private val horoscopeList: List<HoroscopeItem> = HoroscopeItem.entries
     var position: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_detail)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.detail_main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.detail_activity)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -65,27 +52,42 @@ class DetailActivity : AppCompatActivity() {
         previousButton.setOnClickListener {
             if (position > 0) {
                 position--
-                startActivity(
-                    Intent(this, DetailActivity::class.java).putExtra(
-                        "horoscope_id",
-                        horoscopeList[position].id
-
-                    )
-                )
+                val zodiac = horoscopeList[position]
+                findViewById<TextView>(R.id.selected_name_textView).text =
+                    getString(zodiac.zodiacName)
+                findViewById<TextView>(R.id.selected_date_textView).text = getString(zodiac.date)
+                findViewById<ImageView>(R.id.selected_icon_imageView).setImageResource(zodiac.logo)
             }
 
         }
         nextButton.setOnClickListener {
             if (position < 11) {
                 position++
-                startActivity(
-                    Intent(this, DetailActivity::class.java).putExtra(
-                        "horoscope_id",
-                        horoscopeList[position].id
-                    )
-                )
+                val zodiac = horoscopeList[position]
+                findViewById<TextView>(R.id.selected_name_textView).text =
+                    getString(zodiac.zodiacName)
+                findViewById<TextView>(R.id.selected_date_textView).text = getString(zodiac.date)
+                findViewById<ImageView>(R.id.selected_icon_imageView).setImageResource(zodiac.logo)
             }
 
         }
     }
+
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_detail_settings -> {
+                Log.i("DetailMenúSettings", "Clicado el menú Settings")
+                true
+            }
+
+            R.id.menu_detail_add -> {
+                Log.i("DetailMenúAdd", "Clicado el menú Add")
+                true
+            }
+
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }*/
 }

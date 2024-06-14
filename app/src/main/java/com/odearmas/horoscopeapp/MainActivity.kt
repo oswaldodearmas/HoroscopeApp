@@ -2,46 +2,84 @@ package com.odearmas.horoscopeapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.odearmas.horoscopeapp.model.HoroscopeItem
 
 class MainActivity : AppCompatActivity() {
 
-    val horoscopeList: List<HoroscopeItem> = listOf(
-        HoroscopeItem.ARIES,
-        HoroscopeItem.TAURUS,
-        HoroscopeItem.GEMINI,
-        HoroscopeItem.CANCER,
-        HoroscopeItem.LEO,
-        HoroscopeItem.VIRGO,
-        HoroscopeItem.LIBRA,
-        HoroscopeItem.SCORPIO,
-        HoroscopeItem.SAGITTARIUS,
-        HoroscopeItem.CAPRICORN,
-        HoroscopeItem.AQUARIUS,
-        HoroscopeItem.PISCES
-    )
+    private var horoscopeList: List<HoroscopeItem> = HoroscopeItem.entries
+    private lateinit var adapter: HoroscopeAdapter
+    private lateinit var recyclerView: RecyclerView
 
-    lateinit var recyclerView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
         recyclerView = findViewById(R.id.activity_main_recyclerView)
-        val adapter = HoroscopeAdapter(horoscopeList){position->
-            navigateToDetail(horoscopeList[position])}
+        adapter = HoroscopeAdapter(horoscopeList) { position ->
+            navigateToDetail(horoscopeList[position])
+        }
 
         recyclerView.adapter = adapter
         //recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = GridLayoutManager(this,2)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
+
     }
-        fun navigateToDetail(horoscopeItem: HoroscopeItem) {
-            val callDetail : Intent = Intent(this, DetailActivity::class.java)
-            callDetail.putExtra("horoscope_id", horoscopeItem.id)
-            startActivity(callDetail)
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_activity_main, menu)
+        val searchViewItem = menu.findItem(R.id.menu_search)
+        val searchView = searchViewItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    adapter.updateData(horoscopeList.filter {
+                        getString(it.zodiacName).contains(
+                            newText,
+                            true
+                        )
+                    })
+                }
+                return true
+            }
+
+        })
+        return true
+    }
+
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_main_settings -> {
+                Log.i("MenúSettings", "Clicado el menú Settings")
+                true
+            }
+
+            R.id.menu_main_add -> {
+                Log.i("MenúAdd", "Clicado el menú Add")
+                true
+            }
+
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
+    }*/
+
+    fun navigateToDetail(horoscopeItem: HoroscopeItem) {
+        val callDetail: Intent = Intent(this, DetailActivity::class.java)
+        callDetail.putExtra("horoscope_id", horoscopeItem.id)
+        startActivity(callDetail)
+    }
 }

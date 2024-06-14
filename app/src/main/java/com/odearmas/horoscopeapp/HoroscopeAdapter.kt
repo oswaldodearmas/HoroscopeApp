@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.odearmas.horoscopeapp.model.HoroscopeItem
 
 class HoroscopeAdapter(
-    private val dataSet: List<HoroscopeItem>,
+    private var dataSet: List<HoroscopeItem>,
     private val onItemClickListener: (Int) -> Unit
 ) :
     RecyclerView.Adapter<HoroscopeViewHolder>() {
@@ -39,6 +39,12 @@ class HoroscopeAdapter(
 
         }
 
+    }
+
+    // Este método sirve para actualizar los datos
+    fun updateData (newDataSet: List<HoroscopeItem>) {
+        dataSet = newDataSet
+        notifyDataSetChanged()
     }
 
 }
