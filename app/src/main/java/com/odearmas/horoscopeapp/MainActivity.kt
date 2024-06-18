@@ -15,14 +15,15 @@ class MainActivity : AppCompatActivity() {
     private var horoscopeList: List<HoroscopeItem> = HoroscopeItem.entries
     private lateinit var adapter: HoroscopeAdapter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
+        sessionManager = SessionManager(this)
         recyclerView = findViewById(R.id.activity_main_recyclerView)
-        adapter = HoroscopeAdapter(horoscopeList) { position ->
+        adapter = HoroscopeAdapter(horoscopeList,sessionManager) { position ->
             navigateToDetail(horoscopeList[position])
         }
 
@@ -30,8 +31,13 @@ class MainActivity : AppCompatActivity() {
         //recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
 
-    }
 
+
+    }
+    override fun onResume() {
+        super.onResume()
+        adapter.updateData(horoscopeList)
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_activity_main, menu)
         val searchViewItem = menu.findItem(R.id.menu_search)
@@ -58,6 +64,9 @@ class MainActivity : AppCompatActivity() {
         })
         return true
     }
+
+
+
 
     /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

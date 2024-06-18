@@ -7,6 +7,8 @@ import com.odearmas.horoscopeapp.model.HoroscopeItem
 
 class HoroscopeAdapter(
     private var dataSet: List<HoroscopeItem>,
+    private val sessionManager: SessionManager,
+    private var idFavorito: String? = sessionManager.getFavoriteHoroscope(),
     private val onItemClickListener: (Int) -> Unit
 ) :
     RecyclerView.Adapter<HoroscopeViewHolder>() {
@@ -34,16 +36,22 @@ class HoroscopeAdapter(
         holder.textView2.setText(horoscope.date)
         holder.imageView.setImageResource(horoscope.logo)
 
+        if (horoscope.id == idFavorito) {
+            holder.imageButton.setImageResource(R.drawable.ic_favorite_selected)
+        } else {
+            holder.imageButton.setImageResource(R.drawable.ic_favorite_border)
+        }
+
         holder.itemView.setOnClickListener {
             onItemClickListener(position)
-
         }
 
     }
 
     // Este método sirve para actualizar los datos
-    fun updateData (newDataSet: List<HoroscopeItem>) {
+    fun updateData(newDataSet: List<HoroscopeItem>) {
         dataSet = newDataSet
+        idFavorito = sessionManager.getFavoriteHoroscope()
         notifyDataSetChanged()
     }
 
