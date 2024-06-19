@@ -1,4 +1,4 @@
-package com.odearmas.horoscopeapp
+package com.odearmas.horoscopeapp.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +12,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.odearmas.horoscopeapp.model.HoroscopeItem
+import com.odearmas.horoscopeapp.R
+import com.odearmas.horoscopeapp.utils.SessionManager
+import com.odearmas.horoscopeapp.data.HoroscopeItem
 
 class DetailActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.odearmas.horoscopeapp
+package com.odearmas.horoscopeapp.utils
 
 import android.content.Context
 import android.content.SharedPreferences

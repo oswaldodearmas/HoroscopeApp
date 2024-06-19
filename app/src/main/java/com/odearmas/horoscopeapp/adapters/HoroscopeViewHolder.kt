@@ -1,10 +1,11 @@
-package com.odearmas.horoscopeapp
+package com.odearmas.horoscopeapp.adapters
 
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.odearmas.horoscopeapp.R
 
 // Esta clase se encarga de guardarnos la vista y no tener que inflarla de nuevo
 class HoroscopeViewHolder(view: View) : RecyclerView.ViewHolder(view) {

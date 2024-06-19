@@ -1,9 +1,11 @@
-package com.odearmas.horoscopeapp
+package com.odearmas.horoscopeapp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.odearmas.horoscopeapp.model.HoroscopeItem
+import com.odearmas.horoscopeapp.R
+import com.odearmas.horoscopeapp.utils.SessionManager
+import com.odearmas.horoscopeapp.data.HoroscopeItem
 
 class HoroscopeAdapter(
     private var dataSet: List<HoroscopeItem>,

@@ -1,4 +1,4 @@
-package com.odearmas.horoscopeapp.model
+package com.odearmas.horoscopeapp.data
 
 import com.odearmas.horoscopeapp.R
 

@@ -1,4 +1,4 @@
-package com.odearmas.horoscopeapp
+package com.odearmas.horoscopeapp.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.odearmas.horoscopeapp.model.HoroscopeItem
+import com.odearmas.horoscopeapp.adapters.HoroscopeAdapter
+import com.odearmas.horoscopeapp.R
+import com.odearmas.horoscopeapp.utils.SessionManager
+import com.odearmas.horoscopeapp.data.HoroscopeItem
 
 class MainActivity : AppCompatActivity() {
 
