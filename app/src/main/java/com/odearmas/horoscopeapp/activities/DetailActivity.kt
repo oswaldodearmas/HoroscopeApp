@@ -2,6 +2,7 @@ package com.odearmas.horoscopeapp.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -15,6 +16,14 @@ import androidx.core.view.WindowInsetsCompat
 import com.odearmas.horoscopeapp.R
 import com.odearmas.horoscopeapp.utils.SessionManager
 import com.odearmas.horoscopeapp.data.HoroscopeItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
 class DetailActivity : AppCompatActivity() {
 
@@ -24,6 +33,7 @@ class DetailActivity : AppCompatActivity() {
     private var favorite: Boolean = false
     private lateinit var favoriteMenuItem: MenuItem
     private lateinit var sessionManager: SessionManager
+
 
     //private val favoriteZodiac : ImageButton = findViewById(R.id.menu_detail_favorite_icon)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +57,8 @@ class DetailActivity : AppCompatActivity() {
                     getString(zodiac.zodiacName)
                 findViewById<TextView>(R.id.selected_date_textView).text = getString(zodiac.date)
                 findViewById<ImageView>(R.id.selected_icon_imageView).setImageResource(zodiac.logo)
+                getDailyHoroscope()
+
                 //determinar cuál ítem de horóscopo se ha seleccionado mediante contador
                 var i: Int = 0
                 for (item in horoscopeList) {
@@ -67,6 +79,7 @@ class DetailActivity : AppCompatActivity() {
 
         favoriteIcon = findViewById<ImageButton>(R.id.detail_favorite_icon)
 
+
         //Implementar los botones de adelante y atrás
         val previousButton: Button = findViewById<Button>(R.id.activity_detail_previous_button)
         val nextButton: Button = findViewById<Button>(R.id.activity_detail_next_button)
@@ -79,6 +92,7 @@ class DetailActivity : AppCompatActivity() {
                     getString(zodiac.zodiacName)
                 findViewById<TextView>(R.id.selected_date_textView).text = getString(zodiac.date)
                 findViewById<ImageView>(R.id.selected_icon_imageView).setImageResource(zodiac.logo)
+                getDailyHoroscope()
                 favorite = assertFavorite()
                 setFavoriteIcon()
             }
@@ -92,6 +106,7 @@ class DetailActivity : AppCompatActivity() {
                     getString(zodiac.zodiacName)
                 findViewById<TextView>(R.id.selected_date_textView).text = getString(zodiac.date)
                 findViewById<ImageView>(R.id.selected_icon_imageView).setImageResource(zodiac.logo)
+                getDailyHoroscope()
                 favorite = assertFavorite()
                 setFavoriteIcon()
             }
@@ -107,6 +122,43 @@ class DetailActivity : AppCompatActivity() {
             setFavoriteIcon()
         }
 
+    }
+
+
+    fun getDailyHoroscope() {
+// Llamada en hilo secundario
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url =
+                    URL("https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=${horoscopeList[position].id}&day=TODAY")
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "GET"
+                val responseCode = connection.responseCode
+                Log.i("HTTP", "Response Code = ${responseCode}")
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    val bufferedReader = BufferedReader(InputStreamReader(connection.inputStream))
+                    var inputLine: String?
+                    val response = StringBuffer()
+                    while (bufferedReader.readLine().also { inputLine = it } != null) {
+                        response.append(inputLine)
+                    }
+                    bufferedReader.close()
+
+                    //parsear el JSON
+                    val jsonResponse = JSONObject(response.toString())
+                    val result = jsonResponse.getJSONObject("data").getString("horoscope_data")
+
+                    runOnUiThread {
+                        findViewById<TextView>(R.id.daily_horoscope_textView).text = result
+                    }
+
+                } else { // Hubo un error
+                    Log.w("HTTP", "Response :: Hubo un error")
+                }
+            } catch (e: Exception) {
+                Log.e("HTTP", "Response Error :: ${e.stackTraceToString()}")
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -137,6 +189,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+
     //Implementación del menú de vista detalle
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_activity_detail, menu)
@@ -158,7 +211,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun assertFavorite(): Boolean {
-            return sessionManager.getFavoriteHoroscope()!! == horoscopeList[position].id
+        return sessionManager.getFavoriteHoroscope()!! == horoscopeList[position].id
     }
 
     /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -178,4 +231,6 @@ class DetailActivity : AppCompatActivity() {
             }
         }
     }*/
+
+
 }
