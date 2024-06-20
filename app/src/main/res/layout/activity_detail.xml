@@ -52,10 +52,10 @@
                     android:id="@+id/detail_favorite_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_favorite_border"
-                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:layout_gravity="bottom|end"
-                    android:layout_margin="8dp"/>
+                    android:layout_margin="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
+<!--                    android:src="@drawable/ic_favorite_border_black" -->
 
             </FrameLayout>
 
@@ -64,15 +64,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textSize="16sp"></TextView>
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/selected_name_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:textAlignment="center"
-                android:textSize="24sp"
-                android:layout_marginBottom="10dp"></TextView>
+                android:textSize="24sp"/>
 
             <ScrollView
                 android:layout_width="wrap_content"
@@ -83,12 +83,22 @@
                     android:id="@+id/daily_horoscope_textView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:justificationMode="inter_word"
                     android:paddingHorizontal="10dp"
-                    android:textSize="20sp"
-                    android:justificationMode="inter_word" />
+                    android:textSize="20sp" />
 
             </ScrollView>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="189dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </LinearLayout>
 

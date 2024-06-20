@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +34,7 @@ class DetailActivity : AppCompatActivity() {
     private var favorite: Boolean = false
     private lateinit var favoriteMenuItem: MenuItem
     private lateinit var sessionManager: SessionManager
+    private lateinit var progressBar: ProgressBar
 
 
     //private val favoriteZodiac : ImageButton = findViewById(R.id.menu_detail_favorite_icon)
@@ -46,6 +48,7 @@ class DetailActivity : AppCompatActivity() {
             insets
         }
 
+        progressBar = findViewById(R.id.progressBar)
 
         //Recibir la petición desde activity_main y construir la vista de detalle
         val zodiacId = intent.getStringExtra("horoscope_id")
@@ -127,6 +130,10 @@ class DetailActivity : AppCompatActivity() {
 
 //Llamada a la API para traer el horóscopo diario
     fun getDailyHoroscope() {
+
+    runOnUiThread {
+        progressBar.visibility = ProgressBar.VISIBLE
+    }
 // Llamada en hilo secundario
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -150,6 +157,7 @@ class DetailActivity : AppCompatActivity() {
                     val result = jsonResponse.getJSONObject("data").getString("horoscope_data")
 
                     runOnUiThread {
+                        progressBar.visibility = ProgressBar.GONE
                         findViewById<TextView>(R.id.daily_horoscope_textView).text = result
                     }
 
@@ -184,7 +192,7 @@ class DetailActivity : AppCompatActivity() {
             R.id.menu_detail_share -> {
                 val sendIntent = Intent()
                 sendIntent.setAction(Intent.ACTION_SEND)
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
+                sendIntent.putExtra(Intent.EXTRA_TEXT, findViewById<TextView>(R.id.daily_horoscope_textView).text.toString())
                 sendIntent.setType("text/plain")
 
                 val shareIntent = Intent.createChooser(sendIntent, null)
@@ -212,7 +220,7 @@ class DetailActivity : AppCompatActivity() {
             favoriteIcon.setImageResource(R.drawable.ic_favorite_selected)
             favoriteMenuItem.setIcon(R.drawable.ic_favorite_selected)
         } else {
-            favoriteIcon.setImageResource(R.drawable.ic_favorite_border)
+            favoriteIcon.setImageResource(R.drawable.ic_favorite_border_black)
             favoriteMenuItem.setIcon(R.drawable.ic_favorite_border)
         }
     }
