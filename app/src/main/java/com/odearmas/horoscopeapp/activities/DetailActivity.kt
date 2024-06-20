@@ -53,6 +53,7 @@ class DetailActivity : AppCompatActivity() {
             val zodiac = HoroscopeItem.fromId(zodiacId)
             //val zodiac = zodiacId?.let { HoroscopeItem.fromId(it) }
             if (zodiac != null) {
+                supportActionBar?.setDisplayHomeAsUpEnabled(true) //Flecha de ir atrás
                 findViewById<TextView>(R.id.selected_name_textView).text =
                     getString(zodiac.zodiacName)
                 findViewById<TextView>(R.id.selected_date_textView).text = getString(zodiac.date)
@@ -124,7 +125,7 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-
+//Llamada a la API para traer el horóscopo diario
     fun getDailyHoroscope() {
 // Llamada en hilo secundario
         CoroutineScope(Dispatchers.IO).launch {
@@ -134,7 +135,7 @@ class DetailActivity : AppCompatActivity() {
                 val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "GET"
                 val responseCode = connection.responseCode
-                Log.i("HTTP", "Response Code = ${responseCode}")
+                Log.i("HTTP", "Response Code = $responseCode")
                 if (responseCode == HttpsURLConnection.HTTP_OK) {
                     val bufferedReader = BufferedReader(InputStreamReader(connection.inputStream))
                     var inputLine: String?
@@ -163,6 +164,12 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+
+            android.R.id.home -> {
+                finish()
+                true
+            }
+
             R.id.menu_detail_favorite_icon -> {
                 if (favorite) {
                     sessionManager.setFavoriteHoroscope("")
@@ -211,7 +218,9 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun assertFavorite(): Boolean {
-        return sessionManager.getFavoriteHoroscope()!! == horoscopeList[position].id
+        if(sessionManager.getFavoriteHoroscope()!=null){
+        return sessionManager.getFavoriteHoroscope() == horoscopeList[position].id}
+        return false
     }
 
     /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
