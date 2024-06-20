@@ -2,8 +2,23 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.HoroscopeApp" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/my_light_primary</item>
+        <item name="colorPrimaryVariant">@color/my_light_primary_variant</item>
+        <item name="actionBarItemBackground">@color/my_light_primary</item>
+        <item name="actionBarStyle">@style/ActionBar.HoroscopeApp</item>
     </style>
 
     <style name="Theme.HoroscopeApp" parent="Base.Theme.HoroscopeApp" />
+
+    <!-- ActionBar style -->
+    <style name="ActionBar.HoroscopeApp" parent="Widget.AppCompat.ActionBar">
+        <item name="background">@color/my_light_primary</item>
+        <item name="titleTextStyle">@style/ActionBar.TitleText</item>
+        <item name="homeAsUpIndicator">@drawable/ic_back_white</item>
+    </style>
+
+    <!-- ActionBar title text style -->
+    <style name="ActionBar.TitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>

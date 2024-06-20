@@ -53,7 +53,7 @@ class DetailActivity : AppCompatActivity() {
             val zodiac = HoroscopeItem.fromId(zodiacId)
             //val zodiac = zodiacId?.let { HoroscopeItem.fromId(it) }
             if (zodiac != null) {
-                supportActionBar?.setDisplayHomeAsUpEnabled(true) //Flecha de ir atrás
+                supportActionBar?.setDisplayHomeAsUpEnabled(true) //Flecha de ir atrásf
                 findViewById<TextView>(R.id.selected_name_textView).text =
                     getString(zodiac.zodiacName)
                 findViewById<TextView>(R.id.selected_date_textView).text = getString(zodiac.date)
