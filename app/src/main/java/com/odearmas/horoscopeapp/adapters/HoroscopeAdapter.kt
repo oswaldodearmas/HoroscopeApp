@@ -1,6 +1,7 @@
 package com.odearmas.horoscopeapp.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.odearmas.horoscopeapp.R
@@ -39,9 +40,11 @@ class HoroscopeAdapter(
         holder.imageView.setImageResource(horoscope.logo)
 
         if (horoscope.id == idFavorito) {
-            holder.imageButton.setImageResource(R.drawable.ic_favorite_selected)
+            holder.imageButton.visibility = View.VISIBLE
+            //holder.imageButton.setImageResource(R.drawable.ic_favorite_selected)
         } else {
-            holder.imageButton.setImageResource(R.drawable.ic_favorite_border)
+            holder.imageButton.visibility = View.INVISIBLE
+            //holder.imageButton.setImageResource(R.drawable.ic_favorite_border)
         }
 
         holder.itemView.setOnClickListener {
